@@ -9,6 +9,9 @@ public class Main {
 
         Course course = new Course();
 
+//        course.doAndShowResults(sparta);
+
         course.doIt(sparta);
+        sparta.showResults();
     }
 }
