@@ -3,10 +3,13 @@ import java.util.Random;
 public class Course {
     private int distance;
     private int hard;
+    private String[] result = new String[4];
+    private String resultTeam = new String();
 
     public Course(int distance, int hard) {
         this.distance = distance;
         this.hard = hard;
+
     }
 
     Course() {
@@ -15,7 +18,7 @@ public class Course {
         hard = random.nextInt(3) + 1;
     }
 
-    void doIt(Team team) {
+    void doAndShowResults(Team team) {
         boolean win = true;
         System.out.println("Команда " + team.getNameTeam() + " приступает к испытаниям!");
         System.out.println("Полоса препятствий длинной " + distance + " метров, со сложностью " + hard + ".");
@@ -29,4 +32,18 @@ public class Course {
         }
         System.out.println(win ? "Комада успешно прошла дистанцию" : "Команда не справилась с заданием");
     }
+
+    void doIt (Team team){
+        boolean win = true;
+        for (int i = 0; i < 4; i++) {
+            if (team.run(i) >= distance * hard) {
+                team.setPlayerResults(i,  " прошел дистанцию");
+            } else {
+                team.setPlayerResults(i,  " не прошел дистанцию");
+                win = false;
+            }
+            team.setResultTeam(win ? "успешно прошла дистанцию" : "не справилась с заданием");
+        }
+    }
+
 }
