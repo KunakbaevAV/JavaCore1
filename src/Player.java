@@ -3,6 +3,7 @@ import java.util.Random;
 class Player{
     private String name;
     private int stamina;
+    private String result;
 
     Player(String name) {
         Random random = new Random();
@@ -10,12 +11,20 @@ class Player{
         stamina = random.nextInt(151) + 100;
     }
 
-    public int getStamina() {
+    int getStamina() {
         return stamina;
     }
 
-    public String getName() {
+    String getName() {
         return name;
+    }
+
+    void setResult(String result) {
+        this.result = name + result;
+    }
+
+    String getResult() {
+        return result;
     }
 
     public Player(String name, int stamina) {
