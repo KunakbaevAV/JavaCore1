@@ -28,4 +28,8 @@ class Team {
         players.add(player4);
     }
 
+    public void showResults(){
+        System.out.println("");
+    }
+
 }
