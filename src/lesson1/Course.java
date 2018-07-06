@@ -1,10 +1,12 @@
+package lesson1;
+
 import java.util.Random;
 
 public class Course {
     private int distance;
     private int hard;
     private String[] result = new String[4];
-    private String resultTeam = new String();
+    private String resultTeam = "";
 
     public Course(int distance, int hard) {
         this.distance = distance;
