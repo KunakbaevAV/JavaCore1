@@ -1,3 +1,6 @@
+//Autor:
+//Artem Kunakbaev
+
 package lesson2;
 
 public class Application {
