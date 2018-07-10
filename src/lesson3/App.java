@@ -45,6 +45,7 @@ public class App {
         phoneDirectory.add("Сидоров", "89998666666");
 
         phoneDirectory.get("Иванов");
+        phoneDirectory.get("Кузнецов");
 
         phoneDirectory.showDirectory();
     }

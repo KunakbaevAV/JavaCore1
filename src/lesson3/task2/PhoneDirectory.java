@@ -16,10 +16,15 @@ public class PhoneDirectory {
     }
 
     public void get(String name) {
-        System.out.println("Телефон(ы) пользователя с фамилией " + name + " " + dir.get(name));
+        if (dir.containsKey(name)) {
+            System.out.println("Телефон(ы) пользователя с фамилией " + name + " " + dir.get(name));
+        } else {
+            System.out.println("Нет телефонов пользователя с фамилией " + name);
+        }
     }
 
     public void showDirectory() {
+        System.out.println("Телефонный справочник: ");
         System.out.println(dir);
     }
 }
