@@ -38,11 +38,13 @@ public class App {
         //проверяем второе задание:
         PhoneDirectory phoneDirectory = new PhoneDirectory();
 
-        phoneDirectory.writePhoneNumber("Vasia", "89998888888");
-        phoneDirectory.writePhoneNumber("Vasia", "89998333333");
-        phoneDirectory.writePhoneNumber("Fedia", "89998885555");
-        phoneDirectory.writePhoneNumber("Maria", "89998666666");
-        phoneDirectory.writePhoneNumber("Maria", "89998666666");
+        phoneDirectory.add("Иванов", "89998888888");
+        phoneDirectory.add("Иванов", "89998333333");
+        phoneDirectory.add("Петров", "89998885555");
+        phoneDirectory.add("Сидоров", "89998666666");
+        phoneDirectory.add("Сидоров", "89998666666");
+
+        phoneDirectory.get("Иванов");
 
         phoneDirectory.showDirectory();
     }

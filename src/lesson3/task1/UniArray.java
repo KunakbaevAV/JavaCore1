@@ -10,10 +10,10 @@ public class UniArray {
 
     public UniArray(String[] mass) {
         map = new HashMap<>();
-        for (String m: mass) map.put(m, map.getOrDefault(m, 0) + 1);
+        for (String m : mass) map.put(m, map.getOrDefault(m, 0) + 1);
     }
 
-    public void showArray(){
+    public void showArray() {
         System.out.println(map);
     }
 }
