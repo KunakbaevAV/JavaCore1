@@ -17,11 +17,11 @@ class ChatWindow extends JFrame {
         setBounds(400, 300, 300, 200);
 
         chatAll.setFocusable(false);
-        JScrollPane jsp = new JScrollPane(chatAll);
+        final JScrollPane jsp = new JScrollPane(chatAll);
         add(jsp, BorderLayout.CENTER);
 
-        JPanel botPane = new JPanel(new BorderLayout());
-        JTextField chatInput = new JTextField();
+        final JPanel botPane = new JPanel(new BorderLayout());
+        final JTextField chatInput = new JTextField();
         chatInput.addActionListener(e -> enterMessage(chatInput));
         JButton btnEnter = new JButton("Enter");
         btnEnter.addActionListener(e -> enterMessage(chatInput));
@@ -37,7 +37,7 @@ class ChatWindow extends JFrame {
     }
 
     private String enterDate() {
-        Date date = new Date();
+        final Date date = new Date();
         SimpleDateFormat formatEnterDate = new SimpleDateFormat("HH:mm:ss: ");
         return formatEnterDate.format(date);
     }
