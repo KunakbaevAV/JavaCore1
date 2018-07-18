@@ -44,12 +44,12 @@ class StreamDuo {
 
     private float[] doHalfOperation(float[] array, int firstIndex) {
         for (int i = 0; i < half; i++, firstIndex++) {
-            arr[i] = (float) (array[i]
+            array[i] = (float) (array[i]
                     * Math.sin(0.2f + firstIndex / 5)
                     * Math.cos(0.2f + firstIndex / 5)
                     * Math.cos(0.4f + firstIndex / 2));
         }
-        return arr;
+        return array;
     }
 
     private void mergeArr() {
