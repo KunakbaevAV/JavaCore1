@@ -19,13 +19,17 @@ class StreamDuo {
         }
     }
 
-    void doOperation() {
+    void doOperation() throws InterruptedException {
         final long beginTime = System.currentTimeMillis();
 
         divideArr();
 
-        new Thread(() -> a1 = doHalfOperation(a1, 0)).start();
-        new Thread(() -> a2 = doHalfOperation(a2, half)).start();
+        final Thread steam1 = new Thread(() -> a1 = doHalfOperation(a1, 0));
+        final Thread steam2 = new Thread(() -> a2 = doHalfOperation(a2, half));
+        steam1.start();
+        steam2.start();
+        steam1.join();
+        steam2.join();
 
         mergeArr();
 
@@ -38,13 +42,13 @@ class StreamDuo {
         System.arraycopy(arr, half, a2, 0, half);
     }
 
-    private synchronized float[] doHalfOperation(float[] array, int firstIndex) {
-            for (int i = 0; i <  half; i++, firstIndex++) {
-                arr[i] = (float) (arr[i]
-                        * Math.sin(0.2f + firstIndex / 5)
-                        * Math.cos(0.2f + firstIndex / 5)
-                        * Math.cos(0.4f + firstIndex / 2));
-            }
+    private float[] doHalfOperation(float[] array, int firstIndex) {
+        for (int i = 0; i < half; i++, firstIndex++) {
+            arr[i] = (float) (array[i]
+                    * Math.sin(0.2f + firstIndex / 5)
+                    * Math.cos(0.2f + firstIndex / 5)
+                    * Math.cos(0.4f + firstIndex / 2));
+        }
         return arr;
     }
 
