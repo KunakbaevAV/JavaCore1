@@ -3,7 +3,7 @@ package lesson5;
 /**
  * @autor Kunakbaev Artem
  */
-class StreamDuo {
+final class StreamDuo {
     private static final int size = 10000000;
     private static final int half = size / 2;
     private final float[] arr;

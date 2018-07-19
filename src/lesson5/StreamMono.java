@@ -3,7 +3,7 @@ package lesson5;
 /**
  * @autor Kunakbaev Artem
  */
-class StreamMono {
+final class StreamMono {
     private static final int size = 10000000;
     private final float[] arr;
 

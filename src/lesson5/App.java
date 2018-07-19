@@ -3,7 +3,7 @@ package lesson5;
 /**
  * @autor Kunakbaev Artem
  */
-public class App {
+public final class App {
     public static void main(String[] args) throws InterruptedException {
         //проверка через один поток
         StreamMono streamMono = new StreamMono();
