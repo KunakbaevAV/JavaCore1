@@ -14,11 +14,11 @@ public class ClientHandler {
     private DataOutputStream out;
     private String name;
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public ClientHandler(MyServer myServer, Socket socket) {
+    ClientHandler(MyServer myServer, Socket socket) {
         try {
             this.myServer = myServer;
             this.socket = socket;
@@ -51,7 +51,7 @@ public class ClientHandler {
                         System.out.println("от " + name + ": " + str);
                         if (str.equals("/end")) break;
                         myServer.broadcastMsg(name + ": " + str);
-                        if (str.startsWith("/w")) System.out.println("private msg");
+                        if (str.startsWith("/w")) sendPrivateMessage(str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -70,16 +70,19 @@ public class ClientHandler {
         }
     }
 
-    public void sendMsg(String msg) {
+    void sendMsg(String msg) {
         try {
             out.writeUTF(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-//
-//    public void sendPrivateMsg(String msg, ClientHandler client) {
-//        myServer.sendPrivateMessage(msg, client);
-//    }
+
+    private void sendPrivateMessage(String msg) throws IOException {
+        String[] parts = msg.split("\\s");
+        String nick = parts[2];
+        out.writeUTF("nick = " + nick);
+        myServer.sendPrivateMessage(msg, nick);
+    }
 
 }

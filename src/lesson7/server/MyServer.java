@@ -18,7 +18,7 @@ public class MyServer {
     private List<ClientHandler> clients;
     private BaseAuthService authService;
 
-    public BaseAuthService getAuthService() {
+    BaseAuthService getAuthService() {
         return authService;
     }
 
@@ -27,7 +27,7 @@ public class MyServer {
     public MyServer() {
         try {
             server = new ServerSocket(PORT);
-            Socket socket = null;
+            Socket socket;
             authService = new BaseAuthService();
             authService.start();
             clients = new ArrayList<>();
@@ -49,28 +49,30 @@ public class MyServer {
         }
     }
 
-    public synchronized boolean isNickBusy(String nick) {
+    synchronized boolean isNickBusy(String nick) {
         for (ClientHandler o : clients) {
             if (o.getName().equals(nick)) return true;
         }
         return false;
     }
 
-    public synchronized void broadcastMsg(String msg) {
+    synchronized void broadcastMsg(String msg) {
         for (ClientHandler o : clients) {
             o.sendMsg(msg);
         }
     }
 
-    public static synchronized void sendPrivateMessage(String msg, ClientHandler client) {
-        client.sendMsg(msg);
+    synchronized void sendPrivateMessage(String name, String msg) {
+        for (ClientHandler o : clients) {
+            if (name.equals(o.getName())) o.sendMsg(msg);
+        }
     }
 
-    public synchronized void unsubscribe(ClientHandler o) {
+    synchronized void unsubscribe(ClientHandler o) {
         clients.remove(o);
     }
 
-    public synchronized void subscribe(ClientHandler o) {
+    synchronized void subscribe(ClientHandler o) {
         clients.add(o);
     }
 

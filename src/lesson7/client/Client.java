@@ -28,9 +28,8 @@ public class Client extends JFrame {
     private DataInputStream in;
     private DataOutputStream out;
     private AuthWindow authWindow;
-//    private boolean closeClient = false;
 
-    public Client() {
+    private Client() {
         try {
             socket = new Socket("localhost", 8189);
             in = new DataInputStream(socket.getInputStream());
@@ -39,7 +38,6 @@ public class Client extends JFrame {
             Thread t = new Thread(() -> {
                 try {
                     while (true) {
-//                        if (closeClient) break;
                         String str = in.readUTF();
                         if(str.startsWith("/authok")) {
                             setAuthorized(true);
@@ -48,14 +46,10 @@ public class Client extends JFrame {
                         chatArea.append(str + "\n");
                     }
                     while (true) {
-//                        if (closeClient) break;
                         String str = in.readUTF();
                         if (str.equals("/end")) {
                             break;
                         }
-//                        if (str.startsWith("/w")){
-//                            chatArea.append("privat");
-//                        }
                         chatArea.append(str + "\n");
                     }
 
@@ -106,7 +100,6 @@ public class Client extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 try {
-//                    closeClient = true;
                     out.writeUTF("/end");
                     out.flush();
                     socket.close();
@@ -119,31 +112,25 @@ public class Client extends JFrame {
         setVisible(true);
     }
 
-    public void setAuthorized(boolean v) {
+    private void setAuthorized(boolean v) {
     }
 
-    public void onAuthClick(String login, String pass) {
-//        authWindow.setVisible(true);
+    void onAuthClick(String login, String pass) {
+        authWindow.setVisible(true);
         try {
-//            String login = "login1";
-//            String password = "pass1";
             out.writeUTF("/auth " + login + " " + pass);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void sendMsg() {
+    private void sendMsg() {
         try {
             out.writeUTF(chatField.getText());
             chatField.setText("");
         } catch (IOException e) {
             System.out.println("Ошибка отправки сообщения");
         }
-    }
-
-    void sendPrivateMsg(String msg, ClientHandler client){
-        MyServer.sendPrivateMessage(msg, client);
     }
 
 }
