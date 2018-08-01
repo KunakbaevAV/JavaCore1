@@ -124,7 +124,7 @@ final class AuthWindow extends JFrame {
             buttonOk.setEnabled(true);
             checkBox.setEnabled(true);
         } catch (IOException e) {
-            labelInfo.setText("Неверные данные");
+            labelInfo.setText("Вышло время для авторизации");
             buttonOk.setEnabled(true);
             checkBox.setEnabled(true);
         }

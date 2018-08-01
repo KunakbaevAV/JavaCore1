@@ -15,6 +15,7 @@ public final class ChatConstants {
     public static final String PRIVATE_FROM = "шепот от ";
     public static final String PRIVATE_TO = "шепчет ";
     public static final String NO_SUCH_USER_IN_ROOM = "Никого нет в чате";
+    public static final String CLIENTS = "/clients";
 
 }
 

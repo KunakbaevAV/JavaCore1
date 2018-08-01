@@ -36,7 +36,7 @@ class Server {
         return authService;
     }
 
-    synchronized boolean isNIckNameBusy(final String nickName) {
+    synchronized boolean isNickNameBusy(final String nickName) {
         for (ClientHandler client : clients) {
             if (client.getNickName().equals(nickName)) return true;
         }
@@ -52,6 +52,15 @@ class Server {
             }
         }
         from.sendMessage(ChatConstants.NO_SUCH_USER_IN_ROOM);
+    }
+
+    public synchronized void sendClientList(ClientHandler client) {
+        StringBuilder sb = new StringBuilder("/clients: ");
+        for (ClientHandler o : clients) {
+            sb.append(o.getNickName() + " ");
+        }
+        String msg = sb.toString();
+        client.sendMessage(msg);
     }
 
     synchronized void broadcastMessage(final String message) {

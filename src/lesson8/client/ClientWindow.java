@@ -43,7 +43,7 @@ final class ClientWindow extends JFrame {
         }
 
         setTitle("Клиент");
-        setBounds(600, 300, 500, 500);
+        setBounds(400, 100, 500, 500);
         setMinimumSize(new Dimension(400, 300));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
