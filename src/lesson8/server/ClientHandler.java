@@ -21,6 +21,8 @@ final class ClientHandler {
     private String nickName;
     private DataInputStream in;
     private DataOutputStream out;
+    private boolean authTimeOut = false;
+    private boolean authOk = false;
 
     ClientHandler(final Server server, final Socket socket) {
         this.socket = socket;
@@ -32,9 +34,14 @@ final class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             final Thread messageHandlerThread = new Thread(this::handleMessages);
             messageHandlerThread.start();
+            startTimeAuthorization();
         } catch (IOException e) {
             throw new RuntimeException("Проблемы при создании учетной записи");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+
     }
 
     String getNickName() {
@@ -61,12 +68,18 @@ final class ClientHandler {
     }
 
     private void handleClientRequest() throws IOException {
-        while (true) {
+        while (!authTimeOut) {
             final String message = in.readUTF();
             if (message.startsWith(ChatConstants.AUTHORIZE_FLAG)) {
-                if (authorizeClient(message)) break;
+                if (authorizeClient(message)) {
+                    authOk = true;
+                    break;
+                }
             } else if (message.startsWith(ChatConstants.REGISTER_FLAG)) {
-                if (registerClient(message)) break;
+                if (registerClient(message)) {
+                    authOk = true;
+                    break;
+                }
             }
         }
     }
@@ -81,7 +94,7 @@ final class ClientHandler {
 
         final String nickName = server.getAuthService().getNickByLoginPass(authData[1], authData[2]);
         if (nickName != null) {
-            if (!server.isNIckNameBusy(nickName)) {
+            if (!server.isNickNameBusy(nickName)) {
                 sendMessage(ChatConstants.AUTHORIZE_OK_FLAG + nickName);
                 this.nickName = nickName;
                 server.broadcastMessage(this.nickName + ChatConstants.CHAT_ENTERED_FLAG);
@@ -140,6 +153,10 @@ final class ClientHandler {
                         + nickName.length() + 1);
                 server.sendMessageToClient(nickName, this, message);
             } else server.broadcastMessage(getCurrentDate() + nickName + ": " + messageText);
+
+            if (messageText.startsWith(ChatConstants.CLIENTS)) {
+                server.sendClientList(this);
+            }
         }
     }
 
@@ -149,6 +166,24 @@ final class ClientHandler {
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void startTimeAuthorization() throws InterruptedException {
+        long startTime = System.currentTimeMillis();
+        Thread.sleep(120000);
+        if (!authOk) {
+            authTimeOut = true;
+            try {
+                socket.close();
+                in.close();
+                out.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                System.out.println("Время для авторизации закончилось");
+            }
         }
     }
 }
